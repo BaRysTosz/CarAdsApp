@@ -10,8 +10,10 @@
 
             <Label Text="Dodaj nowe ogłoszenie" FontSize="20" FontAttributes="Bold"/>
 
-            <Entry Placeholder="Tytuł" />
-            <Entry Placeholder="Cena (zł)" Keyboard="Numeric"/>
+            <Entry Placeholder="Tytuł" Text="{Binding Tytul}"/>
+            <Entry Placeholder="Cena (zł)" Text="{Binding Cena}"/>
+            
+            
 
             <Label Text="Dane pojazdu" FontAttributes="Bold"/>
 
@@ -23,15 +25,12 @@
 
             <Label Text="Kontakt" FontAttributes="Bold"/>
 
-            <Entry Placeholder="Lokalizacja" />
+            <Entry Placeholder="Lokalizacja" Text="{Binding Lokalizacja}"/>
             <Entry Placeholder="Telefon" Keyboard="Telephone"/>
 
             <Editor Placeholder="Opis ogłoszenia" HeightRequest="120"/>
 
-            <Button 
-                Text="Dodaj ogłoszenie"
-                BackgroundColor="Green"
-                TextColor="White"/>
+            <Button Text="Dodaj ogłoszenie" Command="{Binding DodajKomenda}"/>
 
         </VerticalStackLayout>
     </ScrollView>

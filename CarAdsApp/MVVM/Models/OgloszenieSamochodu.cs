@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarAdsApp.MVVM.Models;
 
+
 public class OgloszenieSamochodu
 {
     public string? Tytul { get; set; }
@@ -14,4 +15,5 @@ public class OgloszenieSamochodu
     public string? ZdjecieUrl { get; set; }
 
     public bool CzyUlubione { get; set; }
+    public bool CzyMoje { get; set; }
 }

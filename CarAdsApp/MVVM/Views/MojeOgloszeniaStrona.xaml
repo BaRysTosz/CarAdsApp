@@ -5,18 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Moje ogłoszenia">
 
-    <VerticalStackLayout Padding="20" Spacing="10">
-
-        <Label 
-            Text="📄 Moje ogłoszenia"
-            FontSize="20"
-            FontAttributes="Bold"/>
-
-        <Label 
-            Text="Nie masz jeszcze ogłoszeń"
-            FontSize="16"
-            HorizontalOptions="Center"/>
-
-    </VerticalStackLayout>
+    <CollectionView ItemsSource="{Binding MojeOgloszenia}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Border Margin="10" Padding="10">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding Tytul}" FontAttributes="Bold"/>
+                        <Label Text="{Binding Cena}" TextColor="Green"/>
+                        <Label Text="{Binding Lokalizacja}" FontSize="12"/>
+                    </VerticalStackLayout>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 
 </ContentPage>
