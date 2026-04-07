@@ -1,9 +1,12 @@
+using CarAdsApp.MVVM.ViewModels;
+
 namespace CarAdsApp.MVVM.Views;
 
 public partial class WszystkieOgloszeniaStrona : ContentPage
 {
-	public WszystkieOgloszeniaStrona()
-	{
-		InitializeComponent();
-	}
+    public WszystkieOgloszeniaStrona()
+    {
+        InitializeComponent();
+        BindingContext = new WszystkieOgloszeniaViewModel();
+    }
 }

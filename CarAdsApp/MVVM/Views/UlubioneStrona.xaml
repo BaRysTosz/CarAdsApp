@@ -7,16 +7,19 @@
 
     <VerticalStackLayout Padding="20" Spacing="10">
 
-        <Label 
-            Text="❤️ Ulubione ogłoszenia"
-            FontSize="20"
-            FontAttributes="Bold"/>
-
-        <Label 
-            Text="Brak ulubionych ogłoszeń"
-            FontSize="16"
-            HorizontalOptions="Center"/>
-
+        <CollectionView ItemsSource="{Binding Ulubione}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="10">
+                        <VerticalStackLayout Padding="10">
+                            <Label Text="{Binding Tytul}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Cena}" TextColor="Green"/>
+                            <Label Text="{Binding Lokalizacja}" FontSize="12"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 
 </ContentPage>

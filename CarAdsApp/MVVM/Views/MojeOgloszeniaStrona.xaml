@@ -5,11 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Moje ogłoszenia">
 
-    <VerticalStackLayout Padding="20">
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <Label 
+            Text="📄 Moje ogłoszenia"
+            FontSize="20"
+            FontAttributes="Bold"/>
+
         <Label 
             Text="Nie masz jeszcze ogłoszeń"
-            FontSize="18"
+            FontSize="16"
             HorizontalOptions="Center"/>
+
     </VerticalStackLayout>
 
 </ContentPage>
