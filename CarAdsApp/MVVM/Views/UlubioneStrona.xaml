@@ -5,11 +5,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Ulubione">
 
-    <VerticalStackLayout Padding="20">
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <Label 
+            Text="❤️ Ulubione ogłoszenia"
+            FontSize="20"
+            FontAttributes="Bold"/>
+
         <Label 
             Text="Brak ulubionych ogłoszeń"
-            FontSize="18"
+            FontSize="16"
             HorizontalOptions="Center"/>
+
     </VerticalStackLayout>
+
+</ContentPage>
 
 </ContentPage>

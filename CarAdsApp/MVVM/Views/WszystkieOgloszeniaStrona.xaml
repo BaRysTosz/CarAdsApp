@@ -8,19 +8,42 @@
     <CollectionView>
         <CollectionView.ItemsSource>
             <x:Array Type="{x:Type x:String}">
-                <x:String>BMW E46 - 8000 zł</x:String>
-                <x:String>Audi A4 - 12000 zł</x:String>
-                <x:String>Golf V - 7000 zł</x:String>
+                <x:String>BMW E46|8000 zł|Kraków</x:String>
+                <x:String>Audi A4|12000 zł|Warszawa</x:String>
+                <x:String>Golf V|7000 zł|Gdańsk</x:String>
             </x:Array>
         </CollectionView.ItemsSource>
 
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Frame Margin="10" Padding="10">
-                    <Label Text="{Binding}" FontSize="18"/>
+                <Frame Margin="10" Padding="0" CornerRadius="10" HasShadow="True">
+
+                    <Grid RowDefinitions="150,Auto" ColumnDefinitions="*">
+
+                        <!-- Zdjęcie (placeholder) -->
+                        <Image 
+                            Source="https://via.placeholder.com/300x150"
+                            Aspect="AspectFill" />
+
+                        <!-- Dane -->
+                        <VerticalStackLayout Grid.Row="1" Padding="10" Spacing="5">
+
+                            <Label Text="{Binding}" FontSize="16" FontAttributes="Bold"/>
+
+                            <Label Text="Cena: --- zł" FontSize="14" TextColor="Green"/>
+
+                            <Label Text="Lokalizacja: ---" FontSize="12"/>
+
+                            <Button Text="❤️ Polub" FontSize="12"/>
+
+                        </VerticalStackLayout>
+
+                    </Grid>
+
                 </Frame>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
+
 
 </ContentPage>

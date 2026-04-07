@@ -6,23 +6,33 @@
     Title="Dodaj ogłoszenie">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="10">
+        <VerticalStackLayout Padding="20" Spacing="12">
+
+            <Label Text="Dodaj nowe ogłoszenie" FontSize="20" FontAttributes="Bold"/>
 
             <Entry Placeholder="Tytuł" />
-            <Entry Placeholder="Cena" Keyboard="Numeric"/>
+            <Entry Placeholder="Cena (zł)" Keyboard="Numeric"/>
+
+            <Label Text="Dane pojazdu" FontAttributes="Bold"/>
+
             <Entry Placeholder="Marka" />
             <Entry Placeholder="Model" />
             <Entry Placeholder="Rok" Keyboard="Numeric"/>
-            <Entry Placeholder="Przebieg" Keyboard="Numeric"/>
+            <Entry Placeholder="Przebieg (km)" Keyboard="Numeric"/>
             <Entry Placeholder="Paliwo" />
+
+            <Label Text="Kontakt" FontAttributes="Bold"/>
+
             <Entry Placeholder="Lokalizacja" />
             <Entry Placeholder="Telefon" Keyboard="Telephone"/>
 
-            <Editor Placeholder="Opis" HeightRequest="100"/>
+            <Editor Placeholder="Opis ogłoszenia" HeightRequest="120"/>
 
-            <Button Text="Dodaj ogłoszenie"/>
+            <Button 
+                Text="Dodaj ogłoszenie"
+                BackgroundColor="Green"
+                TextColor="White"/>
 
         </VerticalStackLayout>
-    </ScrollView>
 
 </ContentPage>
