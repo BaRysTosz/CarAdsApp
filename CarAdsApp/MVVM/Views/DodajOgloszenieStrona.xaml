@@ -34,5 +34,6 @@
                 TextColor="White"/>
 
         </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>
