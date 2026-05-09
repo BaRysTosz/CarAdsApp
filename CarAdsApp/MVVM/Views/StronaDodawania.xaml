@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="CarAdsApp.Widoki.StronaDodawania"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Dodaj">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+
+            <Label Text="Marka"/>
+            <Entry Placeholder="Marka" Text="{Binding Marka}" />
+
+            <Label Text="Model"/>
+            <Entry Placeholder="Model" Text="{Binding Model}" />
+
+            <Label Text="Opis"/>
+            <Editor Placeholder="Opis" HeightRequest="100" Text="{Binding Opis}" />
+
+            <Label Text="Cena"/>
+            <Entry Keyboard="Numeric" Placeholder="Cena" Text="{Binding Cena}" />
+
+            <Label Text="Paliwo"/>
+            <Entry Placeholder="Paliwo" Text="{Binding Paliwo}" />
+
+            <Label Text="Przebieg"/>
+            <Entry Keyboard="Numeric" Placeholder="Przebieg" Text="{Binding Przebieg}" />
+
+            <Label Text="VIN"/>
+            <Entry Placeholder="VIN" Text="{Binding Vin}" />
+
+            <Label Text="Rok Produkcji"/>
+            <Entry Keyboard="Numeric" Placeholder="Rok produkcji" Text="{Binding RokProdukcji}" />
+
+            <Label Text="Pojemnosc"/>
+            <Entry Keyboard="Numeric" Placeholder="Pojemność" Text="{Binding Pojemnosc}" />
+
+            <Label Text="Numer Telefonu"/>
+            <Entry Placeholder="Telefon" Text="{Binding NumerTelefonu}" />
+
+            <Label Text="Lokalizacja"/>
+            <Entry Placeholder="Lokalizacja" Text="{Binding Lokalizacja}" />
+            
+            <Label Text="Zdjecia"/>
+
+            <Entry Placeholder="URL zdjęcia 1" Text="{Binding Zdjecie1}" />
+            <Entry Placeholder="URL zdjęcia 2" Text="{Binding Zdjecie2}" />
+            <Entry Placeholder="URL zdjęcia 3" Text="{Binding Zdjecie3}" />
+
+            <Button
+                Command="{Binding DodajCommand}"
+                CornerRadius="20"
+                HeightRequest="55"
+                Text="Dodaj ogłoszenie" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

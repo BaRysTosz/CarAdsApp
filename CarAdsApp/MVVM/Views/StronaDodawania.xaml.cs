@@ -1,10 +1,11 @@
 using CarAdsApp.ModeleWidokow;
+using System.Linq;
 
 namespace CarAdsApp.Widoki;
 
-public partial class StronaGlowna : ContentPage
+public partial class StronaDodawania : ContentPage
 {
-    public StronaGlowna(StronaGlownaWidokModel widokModel)
+    public StronaDodawania(DodajOgloszenieWidokModel widokModel)
     {
         InitializeComponent();
         BindingContext = widokModel;

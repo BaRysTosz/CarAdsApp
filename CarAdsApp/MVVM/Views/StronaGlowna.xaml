@@ -1,12 +1,89 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CarAdsApp.MVVM.Views.StronaGlowna"
-             Title="StronaGlowna">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="CarAdsApp.Widoki.StronaGlowna"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:CarAdsApp.Modele"
+    Title="Ogłoszenia">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- FILTR -->
+        <Picker
+            Grid.Row="0"
+            Title="Filtruj po marce"
+            ItemsSource="{Binding Marki}"
+            SelectedItem="{Binding WybranaMarka}"
+            Margin="10"/>
+
+        <!-- LISTA -->
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Ogloszenia}"
+            SelectionMode="Single"
+            VerticalOptions="FillAndExpand">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:OgloszenieSamochodu">
+
+                    <Frame
+                        Margin="10"
+                        Padding="12"
+                        CornerRadius="15"
+                        HasShadow="True">
+
+                        <VerticalStackLayout Spacing="6">
+
+                            <HorizontalStackLayout
+                                Padding="10"
+                                HorizontalOptions="Center">
+                                <Image
+                                    HeightRequest="200"
+                                    WidthRequest="450"
+                                    Aspect="AspectFit"
+                                    Source="{Binding Zdjecie1}" />
+                                <Image
+                                    HeightRequest="200"
+                                    WidthRequest="450"
+                                    Aspect="AspectFit"
+                                    Source="{Binding Zdjecie2}" />
+                                <Image
+                                    HeightRequest="200"
+                                    WidthRequest="450"
+                                    Aspect="AspectFit"
+                                    Source="{Binding Zdjecie3}" />
+                            </HorizontalStackLayout>
+
+                            <Label
+                                Text="{Binding Marka}"
+                                FontSize="20"
+                                FontAttributes="Bold" />
+
+                            <Label Text="{Binding Model}" />
+
+                            <Label
+                                Text="{Binding Cena, StringFormat='Cena: {0} zł'}"
+                                FontAttributes="Bold"
+                                TextColor="Green" />
+
+                            <Label Text="{Binding Opis}" LineBreakMode="WordWrap"/>
+
+                            <Label Text="{Binding Paliwo, StringFormat='Paliwo: {0}'}" />
+                            <Label Text="{Binding Przebieg, StringFormat='Przebieg: {0} km'}" />
+                            <Label Text="{Binding RokProdukcji, StringFormat='Rok: {0}'}" />
+                            <Label Text="{Binding Pojemnosc, StringFormat='Pojemność: {0}'}" />
+                            <Label Text="{Binding Lokalizacja, StringFormat='Lokalizacja: {0}'}" />
+                            <Label Text="{Binding NumerTelefonu, StringFormat='Tel: {0}'}" />
+
+                        </VerticalStackLayout>
+
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
+
 </ContentPage>
