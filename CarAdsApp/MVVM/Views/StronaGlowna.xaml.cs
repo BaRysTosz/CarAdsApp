@@ -4,9 +4,22 @@ namespace CarAdsApp.Widoki;
 
 public partial class StronaGlowna : ContentPage
 {
-    public StronaGlowna(StronaGlownaWidokModel widokModel)
+    private readonly StronaGlownaWidokModel _widokModel;
+
+    public StronaGlowna(
+        StronaGlownaWidokModel widokModel)
     {
         InitializeComponent();
-        BindingContext = widokModel;
+
+        _widokModel = widokModel;
+
+        BindingContext = _widokModel;
+    }
+
+    private void FiltrujClicked(
+        object sender,
+        EventArgs e)
+    {
+        _widokModel.Filtruj();
     }
 }

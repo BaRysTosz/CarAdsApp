@@ -1,63 +1,241 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using CarAdsApp.BazaDanych;
 using CarAdsApp.Modele;
 
 namespace CarAdsApp.ModeleWidokow;
 
 public class DodajOgloszenieWidokModel
+    : INotifyPropertyChanged
 {
     private readonly BazaSQLite _baza;
 
-    public string Marka { get; set; }
-    public string Model { get; set; }
-    public string Opis { get; set; }
-    public decimal Cena { get; set; }
-    public string Paliwo { get; set; }
-    public int Przebieg { get; set; }
-    public string Vin { get; set; }
-    public int RokProdukcji { get; set; }
-    public double Pojemnosc { get; set; }
-    public string NumerTelefonu { get; set; }
-    public string Lokalizacja { get; set; }
+    public event PropertyChangedEventHandler
+        PropertyChanged;
 
-    public string Zdjecie1 { get; set; }
-    public string Zdjecie2 { get; set; }
-    public string Zdjecie3 { get; set; }
+    private void OnPropertyChanged(
+        [CallerMemberName] string nazwa = null)
+    {
+        PropertyChanged?.Invoke(
+            this,
+            new PropertyChangedEventArgs(nazwa));
+    }
+
+    private string _marka;
+    public string Marka
+    {
+        get => _marka;
+        set
+        {
+            _marka = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _model;
+    public string Model
+    {
+        get => _model;
+        set
+        {
+            _model = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _opis;
+    public string Opis
+    {
+        get => _opis;
+        set
+        {
+            _opis = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private decimal _cena;
+    public decimal Cena
+    {
+        get => _cena;
+        set
+        {
+            _cena = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _paliwo;
+    public string Paliwo
+    {
+        get => _paliwo;
+        set
+        {
+            _paliwo = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _przebieg;
+    public int Przebieg
+    {
+        get => _przebieg;
+        set
+        {
+            _przebieg = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _vin;
+    public string Vin
+    {
+        get => _vin;
+        set
+        {
+            _vin = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _rokProdukcji;
+    public int RokProdukcji
+    {
+        get => _rokProdukcji;
+        set
+        {
+            _rokProdukcji = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private double _pojemnosc;
+    public double Pojemnosc
+    {
+        get => _pojemnosc;
+        set
+        {
+            _pojemnosc = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _numerTelefonu;
+    public string NumerTelefonu
+    {
+        get => _numerTelefonu;
+        set
+        {
+            _numerTelefonu = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _lokalizacja;
+    public string Lokalizacja
+    {
+        get => _lokalizacja;
+        set
+        {
+            _lokalizacja = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _zdjecie1;
+    public string Zdjecie1
+    {
+        get => _zdjecie1;
+        set
+        {
+            _zdjecie1 = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _zdjecie2;
+    public string Zdjecie2
+    {
+        get => _zdjecie2;
+        set
+        {
+            _zdjecie2 = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _zdjecie3;
+    public string Zdjecie3
+    {
+        get => _zdjecie3;
+        set
+        {
+            _zdjecie3 = value;
+            OnPropertyChanged();
+        }
+    }
 
     public ICommand DodajCommand { get; }
 
-    public DodajOgloszenieWidokModel(BazaSQLite baza)
+    public DodajOgloszenieWidokModel(
+        BazaSQLite baza)
     {
         _baza = baza;
 
-        DodajCommand = new Command(async () => await Dodaj());
+        DodajCommand =
+            new Command(async () => await Dodaj());
     }
 
     private async Task Dodaj()
     {
-        var ogloszenie = new OgloszenieSamochodu
-        {
-            Marka = Marka,
-            Model = Model,
-            Opis = Opis,
-            Cena = Cena,
-            Paliwo = Paliwo,
-            Przebieg = Przebieg,
-            Vin = Vin,
-            RokProdukcji = RokProdukcji,
-            Pojemnosc = Pojemnosc,
-            NumerTelefonu = NumerTelefonu,
-            Lokalizacja = Lokalizacja,
-            Zdjecie1 = Zdjecie1,
-            Zdjecie2 = Zdjecie2,
-            Zdjecie3 = Zdjecie3
-        };
+        var ogloszenie =
+            new OgloszenieSamochodu
+            {
+                Marka = Marka,
+                Model = Model,
+                Opis = Opis,
+                Cena = Cena,
+                Paliwo = Paliwo,
+                Przebieg = Przebieg,
+                Vin = Vin,
+                RokProdukcji = RokProdukcji,
+                Pojemnosc = Pojemnosc,
+                NumerTelefonu = NumerTelefonu,
+                Lokalizacja = Lokalizacja,
+                Zdjecie1 = Zdjecie1,
+                Zdjecie2 = Zdjecie2,
+                Zdjecie3 = Zdjecie3
+            };
 
         await _baza.DodajOgloszenie(ogloszenie);
+
+        if (StronaGlownaWidokModel.Instancja != null)
+        {
+            await StronaGlownaWidokModel
+                .Instancja
+                .DodajNoweOgloszenie(ogloszenie);
+        }
 
         await Application.Current.MainPage.DisplayAlert(
             "Sukces",
             "Dodano ogłoszenie",
             "OK");
+
+        // RESET FORMULARZA
+        Marka = "";
+        Model = "";
+        Opis = "";
+        Cena = 0;
+        Paliwo = "";
+        Przebieg = 0;
+        Vin = "";
+        RokProdukcji = 0;
+        Pojemnosc = 0;
+        NumerTelefonu = "";
+        Lokalizacja = "";
+        Zdjecie1 = "";
+        Zdjecie2 = "";
+        Zdjecie3 = "";
     }
 }

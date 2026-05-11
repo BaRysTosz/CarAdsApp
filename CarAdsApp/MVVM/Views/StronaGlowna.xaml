@@ -8,52 +8,131 @@
 
     <Grid RowDefinitions="Auto,*">
 
-        <!-- FILTR -->
-        <Picker
+        <!-- FILTRY -->
+        <Frame
             Grid.Row="0"
-            Title="Filtruj po marce"
-            ItemsSource="{Binding Marki}"
-            SelectedItem="{Binding WybranaMarka}"
-            Margin="10"/>
+            Margin="8"
+            Padding="8"
+            CornerRadius="12">
+
+            <VerticalStackLayout Spacing="6">
+
+                <!-- GÓRNY RZĄD -->
+                <HorizontalStackLayout Spacing="6">
+
+                    <Picker
+                        Title="Marka"
+                        WidthRequest="140"
+                        HeightRequest="65"
+                        FontSize="13"
+                        ItemsSource="{Binding Marki}"
+                        SelectedItem="{Binding WybranaMarka}" />
+
+                    <Picker
+                        Title="Paliwo"
+                        WidthRequest="140"
+                        HeightRequest="65"
+                        FontSize="13"
+                        ItemsSource="{Binding Paliwa}"
+                        SelectedItem="{Binding WybranePaliwo}" />
+
+
+                    <Label
+                        Text="Rok:"
+                        VerticalOptions="Center"
+                        FontSize="13" />
+
+                    <Entry
+                        Placeholder="Od"
+                        WidthRequest="80"
+                        HeightRequest="40"
+                        FontSize="13"
+                        Keyboard="Numeric"
+                        Text="{Binding RokOd}" />
+
+                    <Entry
+                        Placeholder="Do"
+                        WidthRequest="80"
+                        HeightRequest="40"
+                        FontSize="13"
+                        Keyboard="Numeric"
+                        Text="{Binding RokDo}" />
+
+
+                    <Label
+                        Text="KM:"
+                        VerticalOptions="Center"
+                        FontSize="13" />
+
+                    <Entry
+                        Placeholder="Od"
+                        WidthRequest="100"
+                        HeightRequest="40"
+                        FontSize="13"
+                        Keyboard="Numeric"
+                        Text="{Binding PrzebiegOd}" />
+
+                    <Entry
+                        Placeholder="Do"
+                        WidthRequest="100"
+                        HeightRequest="40"
+                        FontSize="13"
+                        Keyboard="Numeric"
+                        Text="{Binding PrzebiegDo}" />
+
+                    <Button
+                        Text="Filtruj"
+                        HeightRequest="40"
+                        FontSize="13"
+                        Padding="12,0"
+                        Clicked="FiltrujClicked"/>
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </Frame>
 
         <!-- LISTA -->
         <CollectionView
             Grid.Row="1"
-            ItemsSource="{Binding Ogloszenia}"
-            SelectionMode="Single"
-            VerticalOptions="FillAndExpand">
+            ItemsSource="{Binding Ogloszenia}">
 
             <CollectionView.ItemTemplate>
+
                 <DataTemplate x:DataType="model:OgloszenieSamochodu">
 
                     <Frame
                         Margin="10"
                         Padding="12"
-                        CornerRadius="15"
-                        HasShadow="True">
+                        CornerRadius="15">
 
                         <VerticalStackLayout Spacing="6">
 
-                            <HorizontalStackLayout
-                                Padding="10"
-                                HorizontalOptions="Center">
+                            <!-- ZDJĘCIA -->
+                            <HorizontalStackLayout Spacing="4">
+
                                 <Image
-                                    HeightRequest="200"
-                                    WidthRequest="450"
-                                    Aspect="AspectFit"
+                                    HeightRequest="180"
+                                    WidthRequest="120"
+                                    Aspect="AspectFill"
                                     Source="{Binding Zdjecie1}" />
+
                                 <Image
-                                    HeightRequest="200"
-                                    WidthRequest="450"
-                                    Aspect="AspectFit"
+                                    HeightRequest="180"
+                                    WidthRequest="120"
+                                    Aspect="AspectFill"
                                     Source="{Binding Zdjecie2}" />
+
                                 <Image
-                                    HeightRequest="200"
-                                    WidthRequest="450"
-                                    Aspect="AspectFit"
+                                    HeightRequest="180"
+                                    WidthRequest="120"
+                                    Aspect="AspectFill"
                                     Source="{Binding Zdjecie3}" />
+
                             </HorizontalStackLayout>
 
+                            <!-- DANE -->
                             <Label
                                 Text="{Binding Marka}"
                                 FontSize="20"
@@ -64,14 +143,14 @@
                             <Label
                                 Text="{Binding Cena, StringFormat='Cena: {0} zł'}"
                                 FontAttributes="Bold"
+                                FontSize="18"
                                 TextColor="Green" />
 
-                            <Label Text="{Binding Opis}" LineBreakMode="WordWrap"/>
+                            <Label Text="{Binding Opis}" />
 
                             <Label Text="{Binding Paliwo, StringFormat='Paliwo: {0}'}" />
                             <Label Text="{Binding Przebieg, StringFormat='Przebieg: {0} km'}" />
                             <Label Text="{Binding RokProdukcji, StringFormat='Rok: {0}'}" />
-                            <Label Text="{Binding Pojemnosc, StringFormat='Pojemność: {0}'}" />
                             <Label Text="{Binding Lokalizacja, StringFormat='Lokalizacja: {0}'}" />
                             <Label Text="{Binding NumerTelefonu, StringFormat='Tel: {0}'}" />
 
@@ -80,6 +159,7 @@
                     </Frame>
 
                 </DataTemplate>
+
             </CollectionView.ItemTemplate>
 
         </CollectionView>

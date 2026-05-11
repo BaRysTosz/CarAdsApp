@@ -1,95 +1,173 @@
-﻿using CarAdsApp.BazaDanych;
+﻿using System.Collections.ObjectModel;
+using CarAdsApp.BazaDanych;
 using CarAdsApp.Modele;
-using CarAdsApp.Serwisy;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using System.Linq;
 
-public partial class StronaGlownaWidokModel : ObservableObject
+namespace CarAdsApp.ModeleWidokow;
+
+public class StronaGlownaWidokModel
 {
     private readonly BazaSQLite _baza;
-    private readonly SerwisApi _api;
 
-    public ObservableCollection<OgloszenieSamochodu> Ogloszenia { get; set; } = new();
+    public static StronaGlownaWidokModel Instancja;
 
-    public ObservableCollection<string> Marki { get; set; } = new();
+    private List<OgloszenieSamochodu> WszystkieOgloszenia =
+        new();
 
-    [ObservableProperty]
-    private string wybranaMarka;
-    [ObservableProperty]
-    private OgloszenieSamochodu zaznaczoneOgloszenie;
+    public ObservableCollection<OgloszenieSamochodu> Ogloszenia
+    { get; set; } = new();
 
-    public StronaGlownaWidokModel(BazaSQLite baza, SerwisApi api)
+    public ObservableCollection<string> Marki
+    { get; set; } = new();
+
+    public ObservableCollection<string> Paliwa
+    { get; set; } = new();
+
+    private string _wybranaMarka;
+
+    public string WybranaMarka
+    {
+        get => _wybranaMarka;
+        set
+        {
+            _wybranaMarka = value;
+            Filtruj();
+        }
+    }
+
+    private string _wybranePaliwo;
+
+    public string WybranePaliwo
+    {
+        get => _wybranePaliwo;
+        set
+        {
+            _wybranePaliwo = value;
+            Filtruj();
+        }
+    }
+
+    public int RokOd { get; set; }
+    public int RokDo { get; set; }
+
+    public int PrzebiegOd { get; set; }
+    public int PrzebiegDo { get; set; }
+
+    public StronaGlownaWidokModel(BazaSQLite baza)
     {
         _baza = baza;
-        _api = api;
 
-        Task.Run(async () => await ZaladujOgloszenia());
+        Instancja = this;
+
+        _ = Zaladuj();
     }
-    [RelayCommand]
-    void NastepneZdjecie()
+
+    public async Task DodajNoweOgloszenie(
+        OgloszenieSamochodu ogloszenie)
     {
-        if (ZaznaczoneOgloszenie == null) return;
+        WszystkieOgloszenia.Insert(0, ogloszenie);
 
-        ZaznaczoneOgloszenie.IndexZdjecia++;
+        if (!Marki.Contains(ogloszenie.Marka))
+        {
+            Marki.Add(ogloszenie.Marka);
+        }
 
-        if (ZaznaczoneOgloszenie.IndexZdjecia > 2)
-            ZaznaczoneOgloszenie.IndexZdjecia = 0;
+        if (!Paliwa.Contains(ogloszenie.Paliwo))
+        {
+            Paliwa.Add(ogloszenie.Paliwo);
+        }
+
+        Filtruj();
+
+        await Task.CompletedTask;
     }
-    [RelayCommand]
-    public async Task ZaladujOgloszenia()
+
+    private async Task Zaladuj()
     {
+        WszystkieOgloszenia =
+            await _baza.PobierzOgloszenia();
+
+        WszystkieOgloszenia =
+            WszystkieOgloszenia
+            .OrderByDescending(x => x.Id)
+            .ToList();
+
         Ogloszenia.Clear();
         Marki.Clear();
+        Paliwa.Clear();
 
-        if (await _baza.LiczbaOgloszen() == 0)
+        Marki.Add("Wszystkie");
+        Paliwa.Add("Wszystkie");
+
+        foreach (var item in WszystkieOgloszenia)
         {
-            var startowe = await _api.PobierzPoczatkoweOgloszenia();
+            Ogloszenia.Add(item);
 
-            foreach (var ogloszenie in startowe)
+            if (!Marki.Contains(item.Marka))
             {
-                await _baza.DodajOgloszenie(ogloszenie);
+                Marki.Add(item.Marka);
+            }
+
+            if (!Paliwa.Contains(item.Paliwo))
+            {
+                Paliwa.Add(item.Paliwo);
             }
         }
 
-        var lista = await _baza.PobierzOgloszenia();
-
-        foreach (var ogloszenie in lista)
-        {
-            Ogloszenia.Add(ogloszenie);
-
-            if (!Marki.Contains(ogloszenie.Marka))
-            {
-                Marki.Add(ogloszenie.Marka);
-            }
-        }
+        WybranaMarka = "Wszystkie";
+        WybranePaliwo = "Wszystkie";
     }
 
-    partial void OnWybranaMarkaChanged(string value)
-    {
-        Task.Run(async () => await Filtruj());
-    }
-
-    private async Task Filtruj()
+    public void Filtruj()
     {
         Ogloszenia.Clear();
 
-        var lista = await _baza.PobierzOgloszenia();
+        var lista = WszystkieOgloszenia.AsEnumerable();
 
-        if (string.IsNullOrWhiteSpace(WybranaMarka))
+        // MARKA
+        if (!string.IsNullOrWhiteSpace(WybranaMarka)
+            && WybranaMarka != "Wszystkie")
         {
-            foreach (var ogloszenie in lista)
-            {
-                Ogloszenia.Add(ogloszenie);
-            }
+            lista = lista.Where(x =>
+                x.Marka == WybranaMarka);
         }
-        else
+
+        // PALIWO
+        if (!string.IsNullOrWhiteSpace(WybranePaliwo)
+            && WybranePaliwo != "Wszystkie")
         {
-            foreach (var ogloszenie in lista.Where(x => x.Marka == WybranaMarka))
-            {
-                Ogloszenia.Add(ogloszenie);
-            }
+            lista = lista.Where(x =>
+                x.Paliwo == WybranePaliwo);
+        }
+
+        // ROCZNIK
+        if (RokOd > 0)
+        {
+            lista = lista.Where(x =>
+                x.RokProdukcji >= RokOd);
+        }
+
+        if (RokDo > 0)
+        {
+            lista = lista.Where(x =>
+                x.RokProdukcji <= RokDo);
+        }
+
+        // PRZEBIEG
+        if (PrzebiegOd > 0)
+        {
+            lista = lista.Where(x =>
+                x.Przebieg >= PrzebiegOd);
+        }
+
+        if (PrzebiegDo > 0)
+        {
+            lista = lista.Where(x =>
+                x.Przebieg <= PrzebiegDo);
+        }
+
+        foreach (var item in lista)
+        {
+            Ogloszenia.Add(item);
         }
     }
 }
