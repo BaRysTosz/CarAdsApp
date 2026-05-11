@@ -9,15 +9,13 @@
     <Grid RowDefinitions="Auto,*">
 
         <!-- FILTRY -->
-        <Frame
+        <Border
             Grid.Row="0"
             Margin="8"
-            Padding="8"
-            CornerRadius="12">
+            Padding="8">
 
             <VerticalStackLayout Spacing="6">
 
-                <!-- GÓRNY RZĄD -->
                 <HorizontalStackLayout Spacing="6">
 
                     <Picker
@@ -91,7 +89,7 @@
 
             </VerticalStackLayout>
 
-        </Frame>
+        </Border>
 
         <!-- LISTA -->
         <CollectionView
@@ -102,10 +100,9 @@
 
                 <DataTemplate x:DataType="model:OgloszenieSamochodu">
 
-                    <Frame
+                    <Border
                         Margin="10"
-                        Padding="12"
-                        CornerRadius="15">
+                        Padding="12">
 
                         <VerticalStackLayout Spacing="6">
 
@@ -113,20 +110,20 @@
                             <HorizontalStackLayout Spacing="4">
 
                                 <Image
-                                    HeightRequest="180"
-                                    WidthRequest="120"
+                                    HeightRequest="220"
+                                    WidthRequest="320"
                                     Aspect="AspectFill"
                                     Source="{Binding Zdjecie1}" />
 
                                 <Image
-                                    HeightRequest="180"
-                                    WidthRequest="120"
+                                    HeightRequest="220"
+                                    WidthRequest="320"
                                     Aspect="AspectFill"
                                     Source="{Binding Zdjecie2}" />
 
                                 <Image
-                                    HeightRequest="180"
-                                    WidthRequest="120"
+                                    HeightRequest="220"
+                                    WidthRequest="320"
                                     Aspect="AspectFill"
                                     Source="{Binding Zdjecie3}" />
 
@@ -156,7 +153,7 @@
 
                         </VerticalStackLayout>
 
-                    </Frame>
+                    </Border>
 
                 </DataTemplate>
 
