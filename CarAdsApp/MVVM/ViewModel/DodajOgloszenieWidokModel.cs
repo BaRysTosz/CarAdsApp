@@ -21,7 +21,7 @@ public class DodajOgloszenieWidokModel
             new PropertyChangedEventArgs(nazwa));
     }
 
-    private string _marka;
+    private string _marka = string.Empty;
     public required string Marka
     {
         get => _marka;
@@ -36,7 +36,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _model;
+    private string _model = string.Empty;
     public string Model
     {
         get => _model;
@@ -51,7 +51,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _opis;
+    private string _opis = string.Empty;
     public string Opis
     {
         get => _opis;
@@ -73,7 +73,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _paliwo;
+    private string _paliwo = string.Empty;
     public string Paliwo
     {
         get => _paliwo;
@@ -95,7 +95,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _vin;
+    private string _vin = string.Empty;
     public string Vin
     {
         get => _vin;
@@ -128,7 +128,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _numerTelefonu;
+    private string _numerTelefonu = string.Empty;
     public string NumerTelefonu
     {
         get => _numerTelefonu;
@@ -139,7 +139,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _lokalizacja;
+    private string _lokalizacja = string.Empty;
     public string Lokalizacja
     {
         get => _lokalizacja;
@@ -150,7 +150,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _zdjecie1;
+    private string _zdjecie1 = string.Empty;
     public string Zdjecie1
     {
         get => _zdjecie1;
@@ -161,7 +161,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _zdjecie2;
+    private string _zdjecie2 = string.Empty;
     public string Zdjecie2
     {
         get => _zdjecie2;
@@ -172,7 +172,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private string _zdjecie3;
+    private string _zdjecie3 = string.Empty;
     public string Zdjecie3
     {
         get => _zdjecie3;
