@@ -8,41 +8,43 @@ public class StronaGlownaWidokModel
 {
     private readonly BazaSQLite _baza;
 
-    public static StronaGlownaWidokModel Instancja;
+    public static StronaGlownaWidokModel? Instancja;
 
-    private List<OgloszenieSamochodu> WszystkieOgloszenia =
-        new();
+    private List<OgloszenieSamochodu> WszystkieOgloszenia = new();
 
-    public ObservableCollection<OgloszenieSamochodu> Ogloszenia
-    { get; set; } = new();
+    public ObservableCollection<OgloszenieSamochodu> Ogloszenia { get; set; } = new();
 
-    public ObservableCollection<string> Marki
-    { get; set; } = new();
+    public ObservableCollection<string> Marki { get; set; } = new();
 
-    public ObservableCollection<string> Paliwa
-    { get; set; } = new();
+    public ObservableCollection<string> Paliwa { get; set; } = new();
 
-    private string _wybranaMarka;
+    private string _wybranaMarka = string.Empty;
 
     public string WybranaMarka
     {
         get => _wybranaMarka;
         set
         {
-            _wybranaMarka = value;
-            Filtruj();
+            if(_wybranaMarka != value)
+            {
+                _wybranaMarka = value;
+                Filtruj();
+            }
         }
     }
 
-    private string _wybranePaliwo;
+    private string _wybranePaliwo = string.Empty;
 
     public string WybranePaliwo
     {
         get => _wybranePaliwo;
         set
         {
-            _wybranePaliwo = value;
-            Filtruj();
+            if (_wybranePaliwo != value)
+            {
+                _wybranePaliwo = value;
+                Filtruj();
+            }
         }
     }
 
@@ -61,6 +63,7 @@ public class StronaGlownaWidokModel
         _ = Zaladuj();
     }
 
+    //Dodawanie nowego ogłoszenia
     public async Task DodajNoweOgloszenie(
         OgloszenieSamochodu ogloszenie)
     {
@@ -81,6 +84,7 @@ public class StronaGlownaWidokModel
         await Task.CompletedTask;
     }
 
+    //Zadałodanie danych do strony
     private async Task Zaladuj()
     {
         WszystkieOgloszenia =
@@ -117,6 +121,7 @@ public class StronaGlownaWidokModel
         WybranePaliwo = "Wszystkie";
     }
 
+    //Filtrowanie informacji
     public void Filtruj()
     {
         Ogloszenia.Clear();

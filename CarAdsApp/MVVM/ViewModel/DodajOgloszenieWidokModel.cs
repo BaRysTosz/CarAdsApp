@@ -11,11 +11,10 @@ public class DodajOgloszenieWidokModel
 {
     private readonly BazaSQLite _baza;
 
-    public event PropertyChangedEventHandler
-        PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged(
-        [CallerMemberName] string nazwa = null)
+        [CallerMemberName] string nazwa = null!)
     {
         PropertyChanged?.Invoke(
             this,
@@ -23,13 +22,17 @@ public class DodajOgloszenieWidokModel
     }
 
     private string _marka;
-    public string Marka
+    public required string Marka
     {
         get => _marka;
         set
         {
-            _marka = value;
-            OnPropertyChanged();
+            if (_marka != value)
+            {
+                _marka = value;
+                OnPropertyChanged();
+            }
+            
         }
     }
 
@@ -39,8 +42,12 @@ public class DodajOgloszenieWidokModel
         get => _model;
         set
         {
-            _model = value;
-            OnPropertyChanged();
+            if(_model != value)
+            {
+                _model = value;
+                OnPropertyChanged();
+            }
+            
         }
     }
 
@@ -178,8 +185,7 @@ public class DodajOgloszenieWidokModel
 
     public ICommand DodajCommand { get; }
 
-    public DodajOgloszenieWidokModel(
-        BazaSQLite baza)
+    public DodajOgloszenieWidokModel(BazaSQLite baza)
     {
         _baza = baza;
 
