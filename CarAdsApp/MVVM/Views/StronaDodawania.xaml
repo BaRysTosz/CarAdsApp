@@ -28,11 +28,8 @@
             <Picker FontSize="13" SelectedItem="{Binding Paliwo}">
                 <Picker.Items>
                     <x:String>Benzyna</x:String>
-                    <x:String>Benzyna + LPG</x:String>
                     <x:String>LPG</x:String>
-                    <x:String>Ropa</x:String>
-                    <x:String>Dizel</x:String>
-                    <x:String>Wszystkie</x:String>
+                    <x:String>Diesel</x:String>
                 </Picker.Items>
             </Picker>
             <Label x:Name="BladPaliwo" Text="*To pole jest wymagane!" TextColor="Red" IsVisible="False" FontSize="13"/>
