@@ -3,12 +3,13 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CarAdsApp.BazaDanych;
 using CarAdsApp.Modele;
+using CarAdsApp.Widoki;
 
 namespace CarAdsApp.ModeleWidokow;
 
-public class DodajOgloszenieWidokModel
-    : INotifyPropertyChanged
+public class DodajOgloszenieWidokModel : INotifyPropertyChanged
 {
+    private List<OgloszenieSamochodu> WszystkieOgloszenia = new();
     private readonly BazaSQLite _baza;
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -62,7 +63,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private decimal _cena;
+    private decimal _cena = 0;
     public decimal Cena
     {
         get => _cena;
@@ -84,7 +85,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private int _przebieg;
+    private int _przebieg = 0;
     public int Przebieg
     {
         get => _przebieg;
@@ -117,7 +118,7 @@ public class DodajOgloszenieWidokModel
         }
     }
 
-    private double _pojemnosc;
+    private double _pojemnosc = 0;
     public double Pojemnosc
     {
         get => _pojemnosc;
@@ -183,6 +184,34 @@ public class DodajOgloszenieWidokModel
         }
     }
 
+    private string _wybranaMarka = string.Empty;
+    public string WybranaMarka
+    {
+        get => _wybranaMarka;
+        set
+        {
+            if (_wybranaMarka != value)
+            {
+                _wybranaMarka = value;
+                Filtruj();
+            }
+        }
+    }
+
+    private string _wybranePaliwo = string.Empty;
+    public string WybranePaliwo
+    {
+        get => _wybranePaliwo;
+        set
+        {
+            if (_wybranePaliwo != value)
+            {
+                _wybranePaliwo = value;
+                Filtruj();
+            }
+        }
+    }
+
     public ICommand DodajCommand { get; }
 
     public DodajOgloszenieWidokModel(BazaSQLite baza)
@@ -192,11 +221,50 @@ public class DodajOgloszenieWidokModel
         DodajCommand =
             new Command(async () => await Dodaj());
     }
+    public async void Zaladoj()
+    {
+        WszystkieOgloszenia = await _baza.PobierzOgloszenia();
+    }
+    public void Filtruj()
+    {
+        
 
+        var lista = WszystkieOgloszenia.AsEnumerable();
+
+        // MARKA
+        if (!string.IsNullOrWhiteSpace(WybranaMarka)
+            && WybranaMarka != "Wszystkie")
+        {
+            lista = lista.Where(x =>
+                x.Marka == WybranaMarka);
+        }
+
+        // PALIWO
+        if (!string.IsNullOrWhiteSpace(WybranePaliwo)
+            && WybranePaliwo != "Wszystkie")
+        {
+            lista = lista.Where(x =>
+                x.Paliwo == WybranePaliwo);
+        }
+
+        
+    }
     private async Task Dodaj()
     {
-        var ogloszenie =
-            new OgloszenieSamochodu
+        var page = Shell.Current.CurrentPage as StronaDodawania;
+        page?.ResetAllCaption();
+
+        if (!String.IsNullOrWhiteSpace(Marka) &&
+            !String.IsNullOrEmpty(Model) &&
+            !String.IsNullOrEmpty(Paliwo) &&
+            !String.IsNullOrEmpty(Vin) &&
+            RokProdukcji > 0 &&
+            Cena > 0 && 
+            Przebieg > 0 &&
+            Pojemnosc > 0 &&
+            page != null)
+        {
+            var ogloszenie = new OgloszenieSamochodu
             {
                 Marka = Marka,
                 Model = Model,
@@ -214,34 +282,75 @@ public class DodajOgloszenieWidokModel
                 Zdjecie3 = Zdjecie3
             };
 
-        await _baza.DodajOgloszenie(ogloszenie);
+            await _baza.DodajOgloszenie(ogloszenie);
 
-        if (StronaGlownaWidokModel.Instancja != null)
-        {
-            await StronaGlownaWidokModel
-                .Instancja
-                .DodajNoweOgloszenie(ogloszenie);
+            if (StronaGlownaWidokModel.Instancja != null)
+            {
+                await StronaGlownaWidokModel
+                    .Instancja
+                    .DodajNoweOgloszenie(ogloszenie);
+            }
+            await Application.Current.MainPage.DisplayAlert(
+                    "Sukces",
+                    "Dodano ogłoszenie",
+                    "OK");
+
+            // RESET FORMULARZA
+            Marka = "";
+            Model = "";
+            Opis = "";
+            Cena = 0;
+            Paliwo = "";
+            Przebieg = 0;
+            Vin = "";
+            RokProdukcji = 0;
+            Pojemnosc = 0;
+            NumerTelefonu = "";
+            Lokalizacja = "";
+            Zdjecie1 = "";
+            Zdjecie2 = "";
+            Zdjecie3 = "";
         }
-
-        await Application.Current.MainPage.DisplayAlert(
-            "Sukces",
-            "Dodano ogłoszenie",
-            "OK");
-
-        // RESET FORMULARZA
-        Marka = "";
-        Model = "";
-        Opis = "";
-        Cena = 0;
-        Paliwo = "";
-        Przebieg = 0;
-        Vin = "";
-        RokProdukcji = 0;
-        Pojemnosc = 0;
-        NumerTelefonu = "";
-        Lokalizacja = "";
-        Zdjecie1 = "";
-        Zdjecie2 = "";
-        Zdjecie3 = "";
+        else if (string.IsNullOrEmpty(Marka))
+        {
+            page?.ShowBladMarkaCaption();
+            if (page != null) { page.IsVisible = true; }
+        }
+        else if (string.IsNullOrEmpty(Model))
+        {
+            page?.ShowBladModelCaption();
+            if (page != null) { page.IsVisible = true; }
+        }
+        else if (string.IsNullOrEmpty(Paliwo))
+        {
+            page?.ShowBladPaliwoCaption();
+            if (page != null) { page.IsVisible = true; }
+        }
+        else if (string.IsNullOrEmpty(Vin))
+        {
+            page?.ShowBladVinCaption();
+            if (page != null) { page.IsVisible = true; }
+        }
+        else if (Cena <= 0)
+        {
+            page?.ShowBladCenaCaption();
+            if (page != null) { page.IsVisible = true; }
+        }
+        else if (RokProdukcji <= 0)
+        {
+            page?.ShowBladRokCaption();
+            if (page != null) { page.IsVisible = true; }
+        }
+        else if (Przebieg <= 0)
+        {
+            page?.ShowBladPrzebiegCaption();
+            if (page != null) { page.IsVisible = true; }
+        }
+        else if (Pojemnosc <= 0)
+        {
+            page?.ShowBladPojemnoscCaption();
+            if (page != null) { page.IsVisible = true; }
+        }
     }
+    
 }

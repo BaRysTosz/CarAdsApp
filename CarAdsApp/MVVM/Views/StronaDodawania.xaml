@@ -10,30 +10,45 @@
 
             <Label Text="Marka"/>
             <Entry Placeholder="Marka" Text="{Binding Marka}" />
+            <Label x:Name="BladMarka" Text="*To pole jest wymagane!" TextColor="Red" IsVisible="Hidden" FontSize="13"/>
 
             <Label Text="Model"/>
-            <Entry Placeholder="Model" Text="{Binding Model}" />
+            <Entry Placeholder="Model" Text="{Binding Model}"/>
+            <Label x:Name="BladModel" Text="*To pole jest wymagane!" TextColor="Red" IsVisible="Hidden" FontSize="13"/>
 
             <Label Text="Opis"/>
             <Editor Placeholder="Opis" HeightRequest="100" Text="{Binding Opis}" />
+            
 
             <Label Text="Cena"/>
             <Entry Keyboard="Numeric" Placeholder="Cena" Text="{Binding Cena}" />
+            <Label x:Name="BladCena" Text="*To pole jest wymagane!" TextColor="Red" IsVisible="Hidden" FontSize="13"/>
 
             <Label Text="Paliwo"/>
-            <Entry Placeholder="Paliwo" Text="{Binding Paliwo}" />
+            <Picker FontSize="13" SelectedItem="{Binding Paliwo}">
+                <Picker.Items>
+                    <x:String>Benzyna</x:String>
+                    <x:String>LPG</x:String>
+                    <x:String>Diesel</x:String>
+                </Picker.Items>
+            </Picker>
+            <Label x:Name="BladPaliwo" Text="*To pole jest wymagane!" TextColor="Red" IsVisible="False" FontSize="13"/>
 
             <Label Text="Przebieg"/>
             <Entry Keyboard="Numeric" Placeholder="Przebieg" Text="{Binding Przebieg}" />
+            <Label x:Name="BladPrzebieg" TextColor="Red" IsVisible="Hidden" FontSize="13"/>
 
             <Label Text="VIN"/>
             <Entry Placeholder="VIN" Text="{Binding Vin}" />
+            <Label x:Name="BladVin" Text="*To pole jest wymagane!" TextColor="Red" FontSize="13" IsVisible="Hidden"/>
 
             <Label Text="Rok Produkcji"/>
             <Entry Keyboard="Numeric" Placeholder="Rok produkcji" Text="{Binding RokProdukcji}" />
+            <Label x:Name="BladRok" Text="*To pole jest wymagane!" TextColor="Red" FontSize="13" IsVisible="Hidden"/>
 
             <Label Text="Pojemnosc"/>
             <Entry Keyboard="Numeric" Placeholder="Pojemność" Text="{Binding Pojemnosc}" />
+            <Label x:Name="BladPojemnosc" TextColor="Red" FontSize="13" Text="*To pole jest wymagane!" IsVisible="Hidden"/>
 
             <Label Text="Numer Telefonu"/>
             <Entry Placeholder="Telefon" Text="{Binding NumerTelefonu}" />
